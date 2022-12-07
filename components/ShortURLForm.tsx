@@ -16,6 +16,14 @@ export default function ShortURLForm() {
     const formik = useFormik({
         initialValues: defaultBody,
         onSubmit: values => {
+            try {
+                new URL(values.originalURL)
+            } catch (err) {
+                formik.errors.originalURL = "Invalid URL"
+                formik.setFieldError('originalURL', "Invalid URL")
+                return
+            }
+
             fetch(`${process.env.HOST}/${process.env.API_V}/short-urls`,
             {
                 method: "POST",
@@ -32,7 +40,7 @@ export default function ShortURLForm() {
       });
 
     return (
-        <form action="" onSubmit={formik.handleSubmit} className="text-black flex flex-col md:flex-row space-x-0 md:space-x-3 space-y-4 md:space-y-0 md:items-end">
+        <form action="" onSubmit={formik.handleSubmit} className="flex flex-col md:flex-row space-x-0 md:space-x-3 space-y-4 md:space-y-0 md:items-end">
             <div className='flex flex-col'>
                 <label htmlFor="name" className='app-label'>Name:</label>
                 <input className='app-input' name="name" type="text" value={formik.values.name} onChange={formik.handleChange} />

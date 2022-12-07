@@ -31,7 +31,11 @@ a {
   }
 
   .app-label {
-    @apply ml-3 text-sm;
+    @apply ml-3 text-sm text-black;
+  }
+
+  .app-container {
+    @apply rounded-2xl p-8 bg-white border-2 border-gray-100 shadow-xl;
   }
 
   .app-cta-btn {

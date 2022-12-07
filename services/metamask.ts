@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import Web3Token from "web3-token";
 
 export var web3: Web3;
 
@@ -89,5 +90,15 @@ export async function sendNetworkBalance(owner: string, destination: string, val
             .catch(console.log);
     } catch (err) {
         console.log(err);
+    }
+}
+
+export async function verifyToken(token: string) {
+    try {
+        const { address, body } = await Web3Token.verify(token);
+
+        return { address, body, status: true }
+    } catch(err) {
+        return { status: false };
     }
 }
