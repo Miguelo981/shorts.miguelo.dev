@@ -3,7 +3,7 @@ export enum ShortURLStatus {
     Banned = -2,
     Removed = -1,
     Draft = 0,
-    Published = 2
+    Published = 1
 }
 
 export interface ShortURl {

@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import type { ShortURl } from '../models/shortUrl.model';
 import { ShortURLStatus } from '../models/shortUrl.model';
 import JSConfetti from 'js-confetti'
+import { useCookies } from 'react-cookie';
+import { TOKEN_COOKIE_NAME } from '../config/auth';
 
 const defaultBody: ShortURl = {
     name: "",
@@ -10,12 +12,11 @@ const defaultBody: ShortURl = {
     status: ShortURLStatus.Draft,
 }
 
-const token = ""
-
 export default function ShortURLForm() {
+    const [cookie, setCookie] = useCookies();
     const formik = useFormik({
         initialValues: defaultBody,
-        onSubmit: values => {
+        onSubmit: (values) => {
             try {
                 new URL(values.originalURL)
             } catch (err) {
@@ -24,13 +25,13 @@ export default function ShortURLForm() {
                 return
             }
 
-            fetch(`${process.env.HOST}/${process.env.API_V}/short-urls`,
+            fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/short-urls/`,
             {
                 method: "POST",
                 body: JSON.stringify(values),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${cookie[TOKEN_COOKIE_NAME]}`
                 }
             })
             .then(res => res.json())
@@ -40,7 +41,7 @@ export default function ShortURLForm() {
       });
 
     return (
-        <form action="" onSubmit={formik.handleSubmit} className="flex flex-col md:flex-row space-x-0 md:space-x-3 space-y-4 md:space-y-0 md:items-end">
+        <form method='POST' onSubmit={(event) => { event.preventDefault(); formik.handleSubmit(event); }} className="app-flex md:items-end justify-center">
             <div className='flex flex-col'>
                 <label htmlFor="name" className='app-label'>Name:</label>
                 <input className='app-input' name="name" type="text" value={formik.values.name} onChange={formik.handleChange} />

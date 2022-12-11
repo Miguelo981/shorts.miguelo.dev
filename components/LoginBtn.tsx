@@ -23,14 +23,29 @@ export default function LoginBtn() {
     })();
   }, []);
 
+  const createUser = async (token?: string) => {
+    return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/user/register`,
+    {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token || cookie[TOKEN_COOKIE_NAME]}`
+        }
+    })
+    .then(res => res.json())
+}
+
   const connect = async () => {
     await connectToMetamask();
 
     const personalAddress = await getWalletAddress();
-
     setAddress(personalAddress);
+
+    if (!personalAddress) return;
+
     const token = await Web3Token.sign((msg: any) => web3.eth.personal.sign(msg, personalAddress), '1d');
     setCookie(TOKEN_COOKIE_NAME, token)
+    await createUser(token);
   };
 
   return (
