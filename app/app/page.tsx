@@ -58,6 +58,11 @@ export default function AppPage() {
         handleSearch();
     }, [])
 
+    const handleOnCreate = () => {
+        formik.resetForm();
+        handleSearch();
+    }
+
     const filteredLinks = useMemo(() => {
         shortURLs.map((s) => console.log(s, formik.values.status === -1, s.status === formik.values.status))
         return shortURLs.filter(s => (s.name.toLocaleUpperCase().includes(formik.values.name.toUpperCase()) || 
@@ -69,7 +74,7 @@ export default function AppPage() {
     return (
         <section className="w-full h-screen px-5 md:px-10 flex flex-col justify-center gap-5 md:gap-10 pt-[5rem] md:pt-[6.5rem] lg:pt-0">
             <div className="app-container flex flex-col lg:flex-row justify-between gap-4 divide-y-2 md:divide-y-0">
-                <ShortURLForm onCreate={handleSearch} />
+                <ShortURLForm onCreate={handleOnCreate} />
                 <form className="flex justify-between md:justify-center gap-4 pt-4 md:pt-0">
                     <div className='flex flex-col'>
                         <label htmlFor="name" className='app-label'>Search:</label>
