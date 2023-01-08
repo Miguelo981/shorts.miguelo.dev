@@ -6,4 +6,4 @@ COPY . .
 RUN apk add --no-cache git openssh
 RUN yarn install
 
-CMD [ "yarn", "start" ]
+CMD [ "yarn", "dev" ]
