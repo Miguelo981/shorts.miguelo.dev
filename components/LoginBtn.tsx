@@ -52,7 +52,7 @@ export default function LoginBtn() {
     <div className="relative">
       <button
         onClick={connect}
-        className="app-cta-btn app-btn bg-gray-800 hover:bg-gray-900"
+        className="app-cta-btn app-btn bg-gray-900 hover:bg-gray-800"
       >
         {address ? (
           <span className="text-lg">{getSimplifiedAddress(address)}</span>

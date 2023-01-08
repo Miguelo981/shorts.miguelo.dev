@@ -9,9 +9,10 @@ import { ShortURl, ShortURLStatus } from "../models/shortUrl.model"
 
 type ShortURLDetailProps = {
     shortURL: ShortURl;
+    onDelete?: () => void;
 }
 
-export default function ShortURLDetail({ shortURL }: ShortURLDetailProps) {
+export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailProps) {
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [cookie, setCookie] = useCookies();
 
@@ -46,7 +47,7 @@ export default function ShortURLDetail({ shortURL }: ShortURLDetailProps) {
             }
         })
         .then(res => res.json())
-        .then(console.log)
+        .then(onDelete)
         .catch(console.log)
     }
     
@@ -66,8 +67,7 @@ export default function ShortURLDetail({ shortURL }: ShortURLDetailProps) {
         <section className="app-flex items-center justify-between pb-5 border-b-2 border-gray-100">
             {
                 isEdit ?
-                <form action="" onSubmit={formik.handleSubmit} className="app-flex">
-                    <div className="app-flex">
+                <form action="" onSubmit={formik.handleSubmit} className="app-flex w-full">
                         <div className='flex flex-col'>
                             <label htmlFor="name" className='app-label'>Name:</label>
                             <input className='app-input' name="name" type="text" value={formik.values.name} onChange={formik.handleChange} />
@@ -83,12 +83,11 @@ export default function ShortURLDetail({ shortURL }: ShortURLDetailProps) {
                                 <option value="1">Published</option>
                             </select>
                         </div>
-                    </div>
                 </form>
                 : 
-                <div className="app-flex items-center">
+                <div className="flex flex-wrap gap-4 items-center w-full">
                     <h3 className="font-bold">{formik.values.name}</h3>
-                    <p>{formik.values.originalURL}</p>
+                    <p className="truncate w-1/3 md:w-auto">{formik.values.originalURL}</p>
                     <span className={'app-status-box ' + (formik.values.status ? 'published' : !formik.values.status ? 'draft' : 'removed')}>{ShortURLStatus[formik.values.status]}</span>
                 </div>
             }

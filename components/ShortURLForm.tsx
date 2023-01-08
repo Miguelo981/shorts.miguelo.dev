@@ -12,7 +12,11 @@ const defaultBody: ShortURl = {
     status: ShortURLStatus.Draft,
 }
 
-export default function ShortURLForm() {
+type ShortURLFormProps = {
+    onCreate: () => void;
+} 
+
+export default function ShortURLForm({ onCreate }: ShortURLFormProps) {
     const [cookie, setCookie] = useCookies();
     const formik = useFormik({
         initialValues: defaultBody,
@@ -35,7 +39,7 @@ export default function ShortURLForm() {
                 }
             })
             .then(res => res.json())
-            .then(data => new JSConfetti().addConfetti())
+            .then(data => { onCreate(); new JSConfetti().addConfetti() })
             .catch(err => console.log(err))
         },
       });
@@ -50,7 +54,7 @@ export default function ShortURLForm() {
                 <label htmlFor="originalURL" className='app-label'>URL:</label>
                 <input className='app-input' name="originalURL" type="text" value={formik.values.originalURL} onChange={formik.handleChange} />
             </div>
-            <button className='app-btn rounded-full py-2 px-12 border-transparent shadow-lg text-white h-full'>Create</button>
+            <button className='app-btn rounded-full py-2 px-12 border-transparent shadow-lg text-white h-[2.6rem]'>Create</button>
         </form>
     )
 }
