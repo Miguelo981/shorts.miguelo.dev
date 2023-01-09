@@ -48,7 +48,7 @@ a {
   }
 
   .app-btn {
-    @apply rounded-full py-1 px-8 border-transparent bg-indigo-600 hover:bg-indigo-700 transition ease-out active:scale-95;
+    @apply rounded-full py-1 px-8 border-transparent bg-pink-600 hover:bg-pink-700 transition ease-out active:scale-95;
   }
 
   .app-btn-remove {
@@ -68,7 +68,11 @@ a {
   }
 
   .app-cta-btn {
+    @apply py-2 px-12;
+  }
 
+  .app-cta-btn-2 {
+    @apply py-4 px-16 text-2xl bg-gradient-to-tr from-purple-600 to-pink-600 hover:bg-gradient-to-br transition ease-in-out duration-300 active:scale-95;
   }
 
   .app-flex {
@@ -91,6 +95,12 @@ a {
     @apply bg-red-600;
   }
 
+  .title-gradient {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply bg-gradient-to-tr from-purple-600 to-pink-600 bg-clip-text;
+  }
+
   .app-cta-btn::before {
     content: "";
     background: linear-gradient(
@@ -100,7 +110,8 @@ a {
     );
     background-size: 800%;
     animation: glowing 20s linear infinite;
-    @apply absolute top-0 left-0 z-[-1] w-full h-full blur-sm rounded-xl;
+    width: 72%;
+    @apply absolute top-0 left-0 z-[-1] h-full blur-sm rounded-xl;
   }
 
   @keyframes glowing {
@@ -125,3 +136,13 @@ a {
 }
 
 @keyframes s1 {to{transform: rotate(.5turn)}}
+
+.spinner-2 {
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid;
+  animation: s2 1s infinite;
+}
+
+@keyframes s2 {to{transform: rotate(.5turn)}}
