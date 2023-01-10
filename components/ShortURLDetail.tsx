@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { TOKEN_COOKIE_NAME } from "../config/auth";
 import { ShortURl, ShortURLStatus } from "../models/shortUrl.model"
+import { negativeFeedback, positiveFeedback } from "../services/toast";
 
 type ShortURLDetailProps = {
     shortURL: ShortURl;
@@ -33,8 +34,16 @@ export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailPro
             }
         })
         .then(res => res.json())
-        .then(data => setIsEdit(!isEdit))
-        .catch(console.log)
+        .then(() => {
+            setIsEdit(!isEdit);
+            positiveFeedback('Shortened URL Updated!');
+        })
+        .catch(() => negativeFeedback('Unexpected error updating the URL'));
+    }
+
+    const handleDeleteResponse = () => {
+        onDelete!();
+        positiveFeedback('Shortened URL Deleted!');
     }
 
     const removeShortURL = async (id: string) => {
@@ -47,8 +56,8 @@ export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailPro
             }
         })
         .then(res => res.json())
-        .then(onDelete)
-        .catch(console.log)
+        .then(handleDeleteResponse)
+        .catch(() => negativeFeedback('Unexpected error deleting the URL'))
     }
     
     const handleEdit = async () => {
@@ -56,7 +65,8 @@ export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailPro
     }
     
     const handleCopyShortURL = () => {
-        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_SHORT_URL}?id=${shortURL.shortURLID}`)
+        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_SHORT_URL}?id=${shortURL.shortURLID}`);
+        positiveFeedback('Shortened URL Copied!');
     }
 
     const handleDelete = () => {

@@ -5,6 +5,7 @@ import { ShortURLStatus } from '../models/shortUrl.model';
 import JSConfetti from 'js-confetti'
 import { useCookies } from 'react-cookie';
 import { TOKEN_COOKIE_NAME } from '../config/auth';
+import { negativeFeedback, positiveFeedback } from '../services/toast';
 
 const defaultBody: ShortURl = {
     name: "",
@@ -39,8 +40,8 @@ export default function ShortURLForm({ onCreate }: ShortURLFormProps) {
                 }
             })
             .then(res => res.json())
-            .then(data => { onCreate(); new JSConfetti().addConfetti() })
-            .catch(err => console.log(err))
+            .then(() => { onCreate(); new JSConfetti().addConfetti(); positiveFeedback('Short URL successfully created!') })
+            .catch(() => negativeFeedback('Unexpected error getting short URLs'))
         },
       });
 

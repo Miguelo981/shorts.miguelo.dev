@@ -1,18 +1,22 @@
 "use client"
 
 import { useFormik } from "formik";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useCookies } from "react-cookie";
+import { Toaster } from "react-hot-toast";
 import Loading from "../../components/Loading";
 import ShortURLDetail from "../../components/ShortURLDetail";
 import ShortURLForm from "../../components/ShortURLForm";
 import { TOKEN_COOKIE_NAME } from "../../config/auth";
 import { ShortURl } from "../../models/shortUrl.model";
+import { getWalletAddress } from "../../services/metamask";
+import { negativeFeedback } from "../../services/toast";
 
 const DEFAULT_PAGE = 1, DEFAULT_LIMIT = 25;
 
 export default function AppPage() {
+    const { push } = useRouter();
     const [shortURLs, setShortURLs] = useState<ShortURl[]>([]);
     const [queryLoading, setQueryLoading] = useState<boolean>(true);
     const searchParams = useSearchParams()
@@ -41,8 +45,17 @@ export default function AppPage() {
         })
         .catch(err => { 
             setQueryLoading(false); 
-            //TODO handle error
+            negativeFeedback('Unexpected error getting short URLs');
         })
+    }
+
+    const handleSession = async () => {
+        const personalAddress = await getWalletAddress();
+
+        if (!personalAddress) 
+            return Promise.reject("User not logged in");
+        
+        return Promise.resolve();
     }
 
     const handleSearch = () => {
@@ -51,11 +64,13 @@ export default function AppPage() {
         //if (typeof page !== "string" || typeof limit !== "string") return;
         getShortUrls(page || DEFAULT_PAGE, limit || DEFAULT_LIMIT)
             .then(data => setShortURLs(data || []))
-            .catch(console.log)
+            .catch(() => negativeFeedback('Unexpected error getting short URLs'))
     }
 
     useEffect(() => {
-        handleSearch();
+        handleSession()
+            .then(() => handleSearch())
+            .catch(() => push('/'))
     }, [])
 
     const handleOnCreate = () => {
@@ -64,8 +79,8 @@ export default function AppPage() {
     }
 
     const filteredLinks = useMemo(() => {
-        shortURLs.map((s) => console.log(s, formik.values.status === -1, s.status === formik.values.status))
-        return shortURLs.filter(s => (s.name.toLocaleUpperCase().includes(formik.values.name.toUpperCase()) || 
+        return shortURLs.filter(s => 
+            (s.name.toLocaleUpperCase().includes(formik.values.name.toUpperCase()) || 
             s.originalURL.toLocaleUpperCase().includes(formik.values.name.toUpperCase())) &&
             (formik.values.status === -1 || s.status === formik.values.status)
         )
@@ -73,7 +88,8 @@ export default function AppPage() {
     
     return (
         <section className="w-full h-screen px-5 md:px-10 flex flex-col justify-center gap-5 md:gap-10 pt-[5rem] md:pt-[6.5rem] lg:pt-0">
-            <div className="app-container flex flex-col lg:flex-row justify-between gap-4 divide-y-2 md:divide-y-0">
+            <Toaster />
+            <section className="app-container flex flex-col lg:flex-row justify-between gap-4 divide-y-2 md:divide-y-0">
                 <ShortURLForm onCreate={handleOnCreate} />
                 <form className="flex justify-between md:justify-center gap-4 pt-4 md:pt-0">
                     <div className='flex flex-col'>
@@ -90,19 +106,20 @@ export default function AppPage() {
                         </select>
                     </div>
                 </form>
-            </div>
-            <div className="app-container space-y-4 overflow-y-auto scrollbar max-h-[45vh] md:max-h-[60vh]">
+            </section>
+            <section className="app-container space-y-4 overflow-y-auto scrollbar max-h-[45vh] md:max-h-[60vh]">
                 {
-                    queryLoading ?
+                    queryLoading &&
                         <div className="flex w-full justify-center">
-                            <Loading color="rgb(79 70 229) transparent" />
+                            <Loading color="rgb(219 39 119) transparent" />
                         </div>
-                    :
-                        filteredLinks.map((s, index) => (
-                            <ShortURLDetail key={`surl-${index}`} shortURL={s} onDelete={handleSearch} />
-                        ))
                 }
-            </div>
+                {
+                    filteredLinks?.map((s, index) => (
+                        <ShortURLDetail key={`surl-${index}`} shortURL={s} onDelete={handleSearch} />
+                    ))
+                }
+            </section>
         </section>
     )
 }

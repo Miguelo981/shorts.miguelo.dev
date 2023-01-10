@@ -5,6 +5,7 @@ import {
   checkMetamaskConnection,
   connectToMetamask,
   getWalletAddress,
+  verifyToken,
   web3,
 } from "../services/metamask";
 import { getSimplifiedAddress } from "../utils/text";
@@ -14,6 +15,7 @@ import { TOKEN_COOKIE_NAME } from "../config/auth";
 import { useRouter, usePathname } from "next/navigation";
 import LoadingSM from "./LoadingSM";
 import { createUser, getMyUser } from "../services/short-api";
+import { toast, Toaster } from 'react-hot-toast';
 
 type GetStartedBtnProps = {
   text?: string;
@@ -21,7 +23,6 @@ type GetStartedBtnProps = {
 }
 
 export default function GetStartedBtn({ text='Connect', className="app-cta-btn app-btn bg-gray-900 hover:bg-gray-800" }: GetStartedBtnProps) {
-  console.log(className)
   const { push } = useRouter();
   const navigate = usePathname();
   const [address, setAddress] = useState<string>();
@@ -30,7 +31,6 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
   const [cookie, setCookie] = useCookies();
 
   useEffect(() => {
-    console.log(navigate);
     (async () => {
       await checkMetamaskConnection();
       setBtnDisabled(false);
@@ -63,23 +63,33 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
     let personalAddress = await getWalletAddress();
 
     if (!personalAddress) {
-      await connectToMetamask();
+      await toast.promise(
+          connectToMetamask(), 
+          {
+              loading: 'Connecting to Metamask...',
+              success: <b>Successfully connected to Metamask!</b>,
+              error: <b>Failed to connect to Metamask!</b>,
+          },
+          {
+            position: 'bottom-center'
+          }
+      );
 
       personalAddress = await getWalletAddress();
       setAddress(personalAddress);
     }
 
     setLoading(true);
+    const { status } = await verifyToken(cookie[TOKEN_COOKIE_NAME])
 
-    const token = await handleRefreshToken();
-    const res = await handleCreateUser(token)
+    const token = status ? cookie[TOKEN_COOKIE_NAME] : await handleRefreshToken();
+    const res = await handleCreateUser(token);
 
     if (res && !navigate?.includes('app')) {
       push('/app')
       setLoading(false);
       return;
     }
-
   };
 
   return (
