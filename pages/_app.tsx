@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 import { TOKEN_COOKIE_NAME } from '../config/auth';
 import { usePathname, useRouter } from 'next/navigation';
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   const [cookies, setCookie, removeCookie] = useCookies();
   const navigate = usePathname();
   const { push } = useRouter();
@@ -29,10 +29,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   
   return (
     <>
-        <NextNProgress color='#DB2777' height={5} />
-        <Component {...pageProps} />
+      <NextNProgress color='#DB2777' height={5} />
+      <Component {...pageProps} />
     </>
   )
 }
-
-export default MyApp

@@ -1,4 +1,4 @@
-"use client";
+;
 
 import { useEffect, useState } from "react";
 import { getWalletAddress } from "../services/metamask";
@@ -25,6 +25,7 @@ export default function AddressBtn({ className="app-cta-btn app-btn bg-gray-900 
   return (
     <div className="relative">
       <button
+        id="app-btn"
         className={className}
         disabled={loading}
       >

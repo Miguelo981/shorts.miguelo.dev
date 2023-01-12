@@ -1,4 +1,4 @@
-"use client";
+;
 
 import { useEffect, useState } from "react";
 import {
@@ -8,14 +8,13 @@ import {
   verifyToken,
   web3,
 } from "../services/metamask";
-import { getSimplifiedAddress } from "../utils/text";
 import Web3Token from 'web3-token';
 import { useCookies } from "react-cookie";
 import { TOKEN_COOKIE_NAME } from "../config/auth";
 import { useRouter, usePathname } from "next/navigation";
 import LoadingSM from "./LoadingSM";
 import { createUser, getMyUser } from "../services/short-api";
-import { toast, Toaster } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 type GetStartedBtnProps = {
   text?: string;
@@ -100,7 +99,7 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
       >
         <span className="text-xl">{ 
           loading ? 
-            <span className="flex items-center gap-2"><LoadingSM /> { text }</span> 
+            <span className="flex justify-center items-center gap-2"><LoadingSM /> { text }</span> 
           : isWalletConnected ? 
             //getSimplifiedAddress(address) : text }
             text : 'Connect Wallet' }

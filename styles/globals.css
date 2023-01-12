@@ -105,13 +105,16 @@ a {
     content: "";
     background: linear-gradient(
       40deg,
-      red, blue, deeppink, blue,
-      red, blue, deeppink, blue
+      purple, darkblue, deeppink, blue,
+      purple, darkblue, deeppink, blue
     );
     background-size: 800%;
     animation: glowing 20s linear infinite;
-    width: 72%;
-    @apply absolute top-0 left-0 z-[-1] h-full blur-sm rounded-xl;
+    @apply absolute top-0 left-0 z-[-1] h-full blur-sm rounded-xl w-72;
+  }
+
+  #app-btn.app-cta-btn::before {
+    @apply w-52 md:w-72;
   }
 
   @keyframes glowing {

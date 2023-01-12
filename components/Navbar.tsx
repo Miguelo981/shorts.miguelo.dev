@@ -11,7 +11,7 @@ export default function Navbar() {
                     </h1>
                 </Link>
                 {/* <GetStartedBtn text='Log in' className='app-cta-btn app-btn bg-gray-900 hover:bg-gray-600' /> */}
-                <AddressBtn className='app-cta-btn app-btn bg-gray-900 hover:bg-gray-600' />
+                <AddressBtn className='app-cta-btn app-btn w-52 md:w-72 bg-gray-900 hover:bg-gray-600' />
             </nav>
         </section>
     )

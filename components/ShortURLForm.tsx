@@ -1,4 +1,4 @@
-"use client"
+
 import { useFormik } from 'formik';
 import type { ShortURl } from '../models/shortUrl.model';
 import { ShortURLStatus } from '../models/shortUrl.model';

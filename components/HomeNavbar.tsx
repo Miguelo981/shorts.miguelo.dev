@@ -1,6 +1,7 @@
-"use client"
+
 
 import { Toaster } from "react-hot-toast"
+import { scroller } from 'react-scroll'
 
 const menu = [
     {
@@ -15,9 +16,22 @@ const menu = [
       name: 'How Works',
       id: 'how-works',
     },
+    {
+        name: 'FAQ',
+        id: 'faq',
+      },
 ]
 
 export default function HomeNavbar() {
+    const scrollTo = (id: string) => {
+        scroller.scrollTo(id, {
+            duration: 750,
+            delay: 100,
+            smooth: true,
+            offset: 50,
+        });
+    }
+
     return (
         <header className='fixed p-6 bg-slate-400 backdrop-blur-xl bg-opacity-5 w-screen z-40 bottom-0 md:top-0 h-fit'>
             <Toaster position="bottom-center" />
@@ -25,8 +39,8 @@ export default function HomeNavbar() {
                 <ul className='flex space-x-6 items-center justify-center md:justify-end'>
                     {
                         menu.map((item, index) => (
-                            <a href={`/#${item.id}`} key={`nav-${index}`}>
-                                <li className='text-md md:text-xl font-bold hover:text-pink-600' key={`menu-${index}`}>{item.name}</li>
+                            <a /* href={`/#${item.id}`} */ onClick={() => scrollTo(item.id)} key={`nav-${index}`} className="cursor-pointer">
+                                <li className='text-sm md:text-xl font-semibold hover:font-semibold hover:text-pink-600' key={`menu-${index}`}>{item.name}</li>
                             </a>
                         ))
                     }
