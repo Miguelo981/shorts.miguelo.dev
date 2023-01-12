@@ -68,7 +68,7 @@ a {
   }
 
   .app-cta-btn {
-    @apply py-2 px-12;
+    @apply py-2 px-12 disabled:bg-slate-500;
   }
 
   .app-cta-btn-2 {
@@ -84,15 +84,15 @@ a {
   }
 
   .app-status-box.draft {
-    @apply bg-gray-600;
+    @apply bg-gray-500;
   }
 
   .app-status-box.published {
-    @apply bg-green-600;
+    @apply bg-primary;
   }
 
   .app-status-box.removed {
-    @apply bg-red-600;
+    @apply bg-red-500;
   }
 
   .title-gradient {

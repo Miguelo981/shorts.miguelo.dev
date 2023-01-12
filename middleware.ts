@@ -4,6 +4,12 @@ import { TOKEN_COOKIE_NAME } from "./config/auth";
 import { ShortURLStatus } from "./models/shortUrl.model";
 import { getOriginalShortURL } from "./services/short-api";
 
+export const config = {
+    unstable_allowDynamic: [
+      //'/lib/utilities.js', // allows a single file
+      '/node_modules/web3-token/**', // use a glob to allow anything in the function-bind 3rd party module
+    ],
+}
 
 export async function middleware(req: NextRequest) {
     const token = req.cookies.get(TOKEN_COOKIE_NAME);
@@ -34,12 +40,12 @@ export async function middleware(req: NextRequest) {
             url.pathname = '/'
             return NextResponse.redirect(url);
         }
-    
-        const { address } = await Web3Token.verify(token.value);
-    
-        if (!address) {
+
+        try {
+            const { address } = Web3Token.verify(token.value);
+        } catch (err) {
             url.pathname = '/'
-            return NextResponse.redirect(url)
+            return NextResponse.redirect(url);
         }
     }
 

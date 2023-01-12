@@ -25,7 +25,7 @@ type GetStartedBtnProps = {
 export default function GetStartedBtn({ text='Connect', className="app-cta-btn app-btn bg-gray-900 hover:bg-gray-800" }: GetStartedBtnProps) {
   const { push } = useRouter();
   const navigate = usePathname();
-  const [address, setAddress] = useState<string>();
+  const [isWalletConnected, setWalletConnected] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
   const [cookie, setCookie] = useCookies();
@@ -34,7 +34,7 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
     (async () => {
       await checkMetamaskConnection();
       setBtnDisabled(false);
-      setAddress(await getWalletAddress());
+      setWalletConnected((await getWalletAddress()) ? true : false);
     })();
   }, []);
 
@@ -51,16 +51,18 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
   }
 
   const handleRefreshToken = async (): Promise<string | undefined> => {
-    if (!address) return;
+    const walletAddress = await getWalletAddress();
 
-    const token = await Web3Token.sign((msg: any) => web3.eth.personal.sign(msg, address, ""), '1d');
+    if (!walletAddress) return;
+
+    const token = await Web3Token.sign((msg: any) => web3?.eth.personal.sign(msg, walletAddress, ""), '1d');
     setCookie(TOKEN_COOKIE_NAME, token);
 
     return token;
   }
 
   const connect = async () => {
-    let personalAddress = await getWalletAddress();
+    const personalAddress = await getWalletAddress();
 
     if (!personalAddress) {
       await toast.promise(
@@ -74,13 +76,10 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
             position: 'bottom-center'
           }
       );
-
-      personalAddress = await getWalletAddress();
-      setAddress(personalAddress);
     }
 
     setLoading(true);
-    const { status } = await verifyToken(cookie[TOKEN_COOKIE_NAME])
+    const { status } = await verifyToken(cookie[TOKEN_COOKIE_NAME] || '')
 
     const token = status ? cookie[TOKEN_COOKIE_NAME] : await handleRefreshToken();
     const res = await handleCreateUser(token);
@@ -102,8 +101,9 @@ export default function GetStartedBtn({ text='Connect', className="app-cta-btn a
         <span className="text-xl">{ 
           loading ? 
             <span className="flex items-center gap-2"><LoadingSM /> { text }</span> 
-          : address ? 
-            getSimplifiedAddress(address) : text }
+          : isWalletConnected ? 
+            //getSimplifiedAddress(address) : text }
+            text : 'Connect Wallet' }
         </span>
       </button>
     </div>

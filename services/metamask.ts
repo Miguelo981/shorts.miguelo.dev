@@ -1,12 +1,22 @@
+import { MetaMaskInpageProvider } from "@metamask/providers";
 import Web3 from "web3";
 import Web3Token from "web3-token";
 
-export var web3: Web3;
+export var web3: Web3 | undefined;
 
 export const DESTINATION_ADDRESS = "0x30beE3deAC5F0861d378e78e1004Cf1459e0b347",
  ETHEREUM_TOKEN_TYPE_STANDARD = 'ERC20';
 
-export async function getBalance(address: string): Promise<string> {
+
+declare global {
+    interface Window{
+        ethereum?: MetaMaskInpageProvider;
+    }
+}
+
+export async function getBalance(address: string): Promise<string | undefined> {
+    if (!web3) return;
+
     try {
         const balance = await web3.eth.getBalance(address);
 
@@ -21,10 +31,11 @@ function isMetaMaskInstalled() {
     return Boolean(window.ethereum && window.ethereum.isMetaMask);
 }
 
-async function isMetaMaskConnected() {
+export async function isMetaMaskConnected() {
     const {ethereum} = window;
-    const accounts = await ethereum.request({method: 'eth_accounts'});
-    return accounts && accounts.length > 0;
+    const accounts = await ethereum?.request({method: 'eth_accounts'}) as string[];
+
+    return accounts && accounts?.length > 0;
 }
 
 export async function checkMetamaskConnection() {
@@ -43,7 +54,7 @@ export async function connectToMetamask() {
     }
 
     web3 = new Web3(window.ethereum as any);
-    await window.ethereum.enable();
+    await window.ethereum?.enable();
 
     /* await window.ethereum.request({
         method: 'eth_requestAccounts',
@@ -64,6 +75,9 @@ export async function getNetworkBalance() {
 
     try {
         const address = await getWalletAddress();
+
+        if (!address) return { weiBalance: 0, balance: 0 };
+
         const weiBalance = await web3.eth.getBalance(address);
         const balance = web3.utils.fromWei(weiBalance);
 
@@ -75,7 +89,7 @@ export async function getNetworkBalance() {
     }
 }
 
-export async function getWalletAddress() {
+export async function getWalletAddress(): Promise<string | undefined> {
     if (!web3) return;
 
     return (await web3.eth?.getAccounts())[0];
