@@ -9,7 +9,7 @@ export const getOriginalShortURL = async (id: string): Promise<ShortURl | any> =
             }
         })
         .then(res => res.json())
-        .catch(console.log)
+        .catch()
 }
 
 export const getMyUser = async (token?: string) => {

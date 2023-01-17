@@ -22,7 +22,6 @@ export async function getBalance(address: string): Promise<string | undefined> {
 
         return web3.utils.fromWei(balance);
     } catch (err) {
-        console.log(err);
         return '0';
     }
 }
@@ -54,7 +53,8 @@ export async function connectToMetamask() {
     }
 
     web3 = new Web3(window.ethereum as any);
-    await window.ethereum?.enable();
+    await window.ethereum?.request({ method: 'eth_requestAccounts' });
+    //await window.ethereum?.enable();
 
     /* await window.ethereum.request({
         method: 'eth_requestAccounts',
@@ -83,8 +83,6 @@ export async function getNetworkBalance() {
 
         return { weiBalance, balance };
     } catch (err) {
-        console.log(err);
-
         return { weiBalance: 0, balance: 0 }
     }
 }

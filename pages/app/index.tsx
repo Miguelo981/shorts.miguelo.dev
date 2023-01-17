@@ -1,5 +1,3 @@
-
-
 import { useFormik } from "formik";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -102,9 +100,9 @@ export default function AppPage() {
                             <label htmlFor="status" className='app-label'>Status:</label>
                             <select name="status" onChange={(event) => formik.setFieldValue('status', Number(event.target.value))} value={formik.values.status} 
                                 className="app-input">
-                                <option key={`status--1`} value="-1">All</option>
-                                <option key={`status-1`} value="0">Draft</option>
-                                <option key={`status-0`} value="1">Published</option>
+                                <option value="-1">All</option>
+                                <option value="0">Draft</option>
+                                <option value="1">Published</option>
                             </select>
                         </div>
                     </form>

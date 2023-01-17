@@ -39,9 +39,14 @@ export default function HomeNavbar() {
                 <ul className='flex space-x-6 items-center justify-center md:justify-end'>
                     {
                         menu.map((item, index) => (
-                            <a /* href={`/#${item.id}`} */ onClick={() => scrollTo(item.id)} key={`nav-${index}`} className="cursor-pointer">
-                                <li className='text-sm md:text-xl font-semibold hover:font-semibold hover:text-pink-600' key={`menu-${index}`}>{item.name}</li>
-                            </a>
+                            <li className='' key={`nav-${index}`}>
+                                <a /* href={`/#${item.id}`} */ 
+                                    onClick={() => scrollTo(item.id)}
+                                    className="text-sm md:text-xl font-semibold hover:font-semibold hover:text-pink-600 cursor-pointer"
+                                >
+                                    {item.name}
+                                </a>
+                            </li>
                         ))
                     }
                 </ul>

@@ -904,6 +904,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@builder.io/partytown@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/@builder.io/partytown/-/partytown-0.7.4.tgz#7ac078bf288efc041ecec025679a58ca78ab4ab9"
+  integrity sha512-dcZBPNQiHbMhvDGmdWRFNe75Z/XYmeZ2bubYmC5BeQpF09ObbPcbSqIP2NaNOFonKlWLfsE6u1790o9ZmlfpIw==
+
 "@eslint/eslintrc@^1.3.3":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.4.1.tgz#af58772019a2d271b7e2d4c23ff4ddcba3ccfb3e"
@@ -1470,6 +1475,13 @@
   version "18.0.9"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.9.tgz#ffee5e4bfc2a2f8774b15496474f8e7fe8d0b504"
   integrity sha512-qnVvHxASt/H7i+XG1U1xMiY5t+IHcPGUK7TDMDzom08xa7e86eCeKOiLZezwCKVxJn6NEiiy2ekgX8aQssjIKg==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-scroll@^1.8.6":
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.6.tgz#a2b1ea795279548172cd9a2c99fa4e5568297ffb"
+  integrity sha512-aMTiNgcmA7dwn1yjoHsiL78RfRnKCXzFyMbv63VrZTXloSfNePBdKtVObC3/My6irwDf0Oz0U4VjEC/vrv6/9w==
   dependencies:
     "@types/react" "*"
 

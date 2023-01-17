@@ -1,4 +1,5 @@
 import HomeNavbar from "../components/HomeNavbar"
+import HomeHead from "./head"
 
 export default function RootLayout({
   children,
@@ -7,6 +8,7 @@ export default function RootLayout({
 }) {
   return (
       <>
+        <HomeHead />
         <HomeNavbar />
         <main className="overflow-hidden">{children}</main>
       </>

@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  experimental: {
+    nextScriptWorkers: true,
+  }
   /* webpack: function (config, options) {
     config.module.rules = [
         {
