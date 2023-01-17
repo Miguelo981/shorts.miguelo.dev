@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN yarn install
-#RUN yarn build
+RUN yarn build
 
-#CMD [ "yarn", "start" ]
-CMD [ "yarn", "dev" ]
+CMD [ "yarn", "start" ]
+#CMD [ "yarn", "dev" ]
