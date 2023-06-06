@@ -1,0 +1,6 @@
+services:
+  shorts-frontend:
+    image: shorts-frontend
+    build: .
+    ports:
+      - "3006:3006"

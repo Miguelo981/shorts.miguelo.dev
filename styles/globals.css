@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -19,12 +11,141 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+      width: 10px;
+      height: 20px;
   }
-  body {
-    color: white;
-    background: black;
+  .scrollbar::-webkit-scrollbar-track {
+      @apply border-2 rounded-full bg-slate-100;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+      /* border: 3px solid #f6f7ed; */
+      @apply border-solid border-2 border-slate-500 rounded-full bg-slate-500;
+  }
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+      @apply bg-slate-500;
   }
 }
+
+@layer components {
+  html,
+  body {
+    color: white;
+    padding: 0;
+    margin: 0;;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    @apply bg-slate-100 dark:bg-gray-900;
+  }
+
+  option {
+    @apply text-black;
+  }
+
+  h1, h2, h3, h4, p {
+    @apply text-black dark:text-white;
+  }
+
+  .app-btn {
+    @apply rounded-full py-1 px-8 border-transparent bg-pink-600 hover:bg-pink-700 transition ease-out active:scale-95;
+  }
+
+  .app-btn-remove {
+    @apply rounded-full py-1 px-8 border-transparent bg-gray-800 dark:bg-gray-900 hover:bg-gray-700 dark:hover:bg-slate-700 transition ease-out active:scale-95;
+  }
+
+  .app-input {
+    @apply text-black rounded-full py-2 border border-gray-200 dark:border-slate-600 px-4 h-9 md:h-auto;
+  }
+
+  .app-label {
+    @apply ml-3 text-xs md:text-sm text-black dark:text-white;
+  }
+
+  .app-container {
+    @apply rounded-xl p-8 bg-white dark:bg-slate-800 shadow-xl;
+  }
+
+  .app-cta-btn {
+    @apply py-2 px-12 disabled:bg-slate-500;
+  }
+
+  .app-cta-btn-2 {
+    @apply py-4 px-16 text-2xl bg-gradient-to-tr from-purple-600 to-pink-600 hover:bg-gradient-to-br transition ease-in-out duration-300 active:scale-95;
+  }
+
+  .app-flex {
+    @apply flex flex-col md:flex-row space-x-0 md:space-x-3 space-y-4 md:space-y-0;
+  }
+
+  .app-status-box {
+    @apply rounded-full py-1 px-3 text-sm border-transparent;
+  }
+
+  .app-status-box.draft {
+    @apply bg-gray-500;
+  }
+
+  .app-status-box.published {
+    @apply bg-primary;
+  }
+
+  .app-status-box.removed {
+    @apply bg-red-500;
+  }
+
+  .title-gradient {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply bg-gradient-to-tr from-purple-600 to-pink-600 bg-clip-text;
+  }
+
+  .app-cta-btn::before {
+    content: "";
+    background: linear-gradient(
+      40deg,
+      purple, darkblue, deeppink, blue,
+      purple, darkblue, deeppink, blue
+    );
+    background-size: 800%;
+    animation: glowing 20s linear infinite;
+    @apply absolute top-0 left-0 z-[-1] h-full blur-sm rounded-xl w-72;
+  }
+
+  #app-btn.app-cta-btn::before {
+    @apply w-52 md:w-72;
+  }
+
+  @keyframes glowing {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+}
+
+.spinner-1 {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid;
+  animation: s1 1s infinite;
+}
+
+@keyframes s1 {to{transform: rotate(.5turn)}}
+
+.spinner-2 {
+  width: 25px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 4px solid;
+  animation: s2 1s infinite;
+}
+
+@keyframes s2 {to{transform: rotate(.5turn)}}
