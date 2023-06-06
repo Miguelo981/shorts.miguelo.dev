@@ -1,4 +1,3 @@
-import { MetaMaskInpageProvider } from "@metamask/providers";
 import Web3 from "web3";
 import Web3Token from "web3-token";
 
@@ -6,13 +5,6 @@ export var web3: Web3 | undefined;
 
 export const DESTINATION_ADDRESS = "0x30beE3deAC5F0861d378e78e1004Cf1459e0b347",
  ETHEREUM_TOKEN_TYPE_STANDARD = 'ERC20';
-
-
-declare global {
-    interface Window{
-        ethereum?: MetaMaskInpageProvider;
-    }
-}
 
 export async function getBalance(address: string): Promise<string | undefined> {
     if (!web3) return;
