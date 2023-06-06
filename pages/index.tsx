@@ -4,7 +4,7 @@ import RootLayout from './layout'
 import Collapsible from 'react-collapsible';
 import Image from 'next/image';
 
-const faqs = [
+const FAQS = [
   {
     id: '',
     title: 'What is a URL shortener?',
@@ -106,9 +106,9 @@ export default function Home() {
             <div className='z-20 w-full md:w-1/2 space-y-4'>
               <h2 className='font-bold text-6xl mb-8 text-center'>Frequently <span className='font-black'>Asked Questions</span></h2>
               {
-                faqs.map((item, index) => (
+                FAQS.map((item) => (
                     <Collapsible
-                      key={index}
+                      key={item.title}
                       className='w-full' 
                       trigger={
                         <h3 className='border-b-2 border-pink-600 p-4 hover:bg-slate-800 text-pink-500 text-xl md:text-3xl font-semibold'>{item.title}</h3>

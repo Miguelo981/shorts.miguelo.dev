@@ -30,7 +30,7 @@ export default function ShortURLForm({ onCreate }: ShortURLFormProps) {
                 return
             }
 
-            fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/short-urls/`,
+            fetch(`${process.env.HOST}/${process.env.API_V}/short-urls/`,
             {
                 method: "POST",
                 body: JSON.stringify(values),

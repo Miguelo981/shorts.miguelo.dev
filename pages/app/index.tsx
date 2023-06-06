@@ -30,7 +30,7 @@ export default function AppPage() {
     })
 
     const getShortUrls = async (page: number | string, limit: number | string) => {
-        return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/short-urls/my-shorts?page=${page}&limit=${limit}`,
+        return fetch(`${process.env.HOST}/${process.env.API_V}/short-urls/my-shorts?page=${page}&limit=${limit}`,
         {
             method: "GET",
             headers: {
@@ -115,8 +115,8 @@ export default function AppPage() {
                             </div>
                     }
                     {
-                        filteredLinks?.map((s, index) => (
-                            <ShortURLDetail key={`surl-${index}`} shortURL={s} onDelete={handleSearch} />
+                        filteredLinks?.map((s) => (
+                            <ShortURLDetail key={s._id} shortURL={s} onDelete={handleSearch} />
                         ))
                     }
                 </section>

@@ -1,7 +1,8 @@
+import { API_HOST, API_VERSION } from "../constants"
 import { ShortURl } from "../models/shortUrl.model"
 
 export const getOriginalShortURL = async (id: string): Promise<ShortURl | any> => {
-    return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/short-urls/${id}`,
+    return fetch(`${API_HOST}/${API_VERSION}/short-urls/${id}`,
         {
             method: "GET",
             headers: {
@@ -13,7 +14,7 @@ export const getOriginalShortURL = async (id: string): Promise<ShortURl | any> =
 }
 
 export const getMyUser = async (token?: string) => {
-    return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/user/me`,
+    return fetch(`${API_HOST}/${API_VERSION}/user/me`,
         {
             method: "GET",
             headers: {
@@ -25,7 +26,7 @@ export const getMyUser = async (token?: string) => {
 }
 
 export const createUser = async (token?: string) => {
-    return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/user/register`,
+    return fetch(`${API_HOST}/${API_VERSION}/user/register`,
         {
             method: "POST",
             headers: {

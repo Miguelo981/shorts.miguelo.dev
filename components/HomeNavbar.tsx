@@ -38,8 +38,8 @@ export default function HomeNavbar() {
             <nav className='mx-8 md:mx-12 xl:mx-20'>
                 <ul className='flex space-x-6 items-center justify-center md:justify-end'>
                     {
-                        menu.map((item, index) => (
-                            <li className='' key={`nav-${index}`}>
+                        menu.map((item) => (
+                            <li className='' key={item.name}>
                                 <a /* href={`/#${item.id}`} */ 
                                     onClick={() => scrollTo(item.id)}
                                     className="text-sm md:text-xl font-semibold hover:font-semibold hover:text-pink-600 cursor-pointer"

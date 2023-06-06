@@ -24,7 +24,7 @@ export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailPro
 
 
     const editShortURL = async (id: string, shortURL: ShortURl) => {
-        return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/short-urls/${id}`,
+        return fetch(`${process.env.HOST}/${process.env.API_V}/short-urls/${id}`,
         {
             method: "PATCH",
             body: JSON.stringify(shortURL),
@@ -47,7 +47,7 @@ export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailPro
     }
 
     const removeShortURL = async (id: string) => {
-        return fetch(`${process.env.NEXT_PUBLIC_HOST}/${process.env.NEXT_PUBLIC_API_V}/short-urls/${id}`,
+        return fetch(`${process.env.HOST}/${process.env.API_V}/short-urls/${id}`,
         {
             method: "DELETE",
             headers: {
@@ -65,7 +65,7 @@ export default function ShortURLDetail({ shortURL, onDelete }: ShortURLDetailPro
     }
     
     const handleCopyShortURL = () => {
-        navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_SHORT_URL}?id=${shortURL.shortURLID}`);
+        navigator.clipboard.writeText(`${process.env.SHORT_URL}?id=${shortURL.shortURLID}`);
         positiveFeedback('Shortened URL Copied!');
     }
 
