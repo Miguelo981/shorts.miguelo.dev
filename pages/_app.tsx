@@ -39,7 +39,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <Partytown debug={true} forward={['dataLayer.push']} />
       <Script 
           strategy='worker'
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_ID}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
         />
         <script
           type="text/partytown"
@@ -49,7 +49,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               window.gtag = function gtag(){window.dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', '${process.env.GA_ID}', { 
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', { 
                 page_path: window.location.pathname,
               });
             `,

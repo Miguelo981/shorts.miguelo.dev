@@ -5,11 +5,11 @@ const nextConfig = {
     nextScriptWorkers: true,
   },
   env: {
-    HOST: process.env.HOST,
-    API_V: process.env.API_V,
-    SHORT_URLS: process.env.SHORT_URLS,
-    SHORT_URL: process.env.SHORT_URL,
-    GA_ID: process.env.GA_ID
+    NEXT_PUBLIC_HOST: process.env.NEXT_PUBLIC_HOST,
+    NEXT_PUBLIC_API_V: process.env.NEXT_PUBLIC_API_V,
+    NEXT_PUBLIC_SHORT_URLS: process.env.NEXT_PUBLIC_SHORT_URLS,
+    NEXT_PUBLIC_SHORT_URL: process.env.NEXT_PUBLIC_SHORT_URL,
+    NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID
   }
   /* webpack: function (config, options) {
     config.module.rules = [
